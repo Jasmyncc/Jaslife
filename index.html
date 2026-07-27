@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#7d9b83">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Jaslife">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon.svg">
+  <title>Jaslife</title>
+  <style>
+    :root{--cream:#fffaf2;--paper:#fffdf9;--sage:#7d9b83;--sage-light:#e5eee4;--apricot:#f4b990;--ink:#455047;--muted:#8b938a;--line:#eee6db;--red:#d87c71}
+    *{box-sizing:border-box} body{margin:0;background:var(--cream);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;padding:env(safe-area-inset-top) 16px calc(90px + env(safe-area-inset-bottom));max-width:600px;margin:auto}
+    header{padding:25px 5px 18px;display:flex;justify-content:space-between;align-items:center} h1{font-family:Georgia,"Songti SC",serif;font-size:31px;margin:0;letter-spacing:.5px} .date{font-size:13px;color:var(--muted);margin-top:5px}.hello{font-size:13px;color:var(--sage);background:var(--sage-light);border-radius:99px;padding:8px 11px}
+    .tab{display:none}.tab.active{display:block}.hero{background:linear-gradient(135deg,#8ba88d,#708d79);color:white;border-radius:25px;padding:22px;margin:0 0 16px;box-shadow:0 8px 22px #78907833}.hero small{opacity:.85}.hero strong{display:block;font-size:31px;margin:6px 0}.progress{height:8px;background:#ffffff48;border-radius:10px;overflow:hidden}.progress i{display:block;background:#ffe1c7;height:100%;border-radius:10px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{background:var(--paper);border:1px solid #f7f1e9;border-radius:20px;padding:17px;box-shadow:0 5px 16px #7b67550a}.card b{font-size:22px;display:block;margin:7px 0 2px}.label{font-size:12px;color:var(--muted)}.note{grid-column:1/-1;background:#fff1e4}.note p{margin:8px 0 0;line-height:1.6;font-size:14px}.section-title{font-size:18px;margin:24px 2px 12px}.empty{font-size:14px;color:var(--muted);line-height:1.7;text-align:center;padding:27px 10px}.row{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding:13px 2px}.row:last-child{border-bottom:0}.dot{width:10px;height:10px;border-radius:50%;background:var(--apricot);flex:none}.row-main{flex:1;font-size:15px}.row small{display:block;color:var(--muted);margin-top:4px}.check{width:22px;height:22px;border:2px solid #cbdacb;border-radius:50%;appearance:none;background:white}.check:checked{background:var(--sage);box-shadow:inset 0 0 0 4px white}.amount{font-weight:600}.income{color:var(--sage)}.expense{color:var(--red)}
+    nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(600px,100%);background:#fffdf9f2;backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;z-index:4}.nav-btn{border:0;background:none;color:var(--muted);font-size:11px;padding:7px 4px;min-width:48px}.nav-btn span{display:block;font-size:19px;margin-bottom:2px}.nav-btn.active{color:var(--sage);font-weight:700}.add{width:53px;height:53px;border-radius:50%;border:0;background:var(--apricot);color:white;font-size:30px;line-height:1;box-shadow:0 4px 13px #e6a87788;margin-top:-28px}
+    dialog{border:0;border-radius:24px;width:min(91vw,420px);padding:22px;background:#fffdf9;box-shadow:0 18px 50px #4b3b2b44}dialog::backdrop{background:#4f5f5044}dialog h2{margin:0 0 16px}.types{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.type{border:1px solid var(--line);background:white;border-radius:14px;padding:12px;text-align:left;color:var(--ink)}.type.selected{border-color:var(--sage);background:var(--sage-light)}label{font-size:13px;color:var(--muted);display:block;margin-top:12px}input,textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:12px;background:white;font:inherit;margin-top:5px}textarea{resize:vertical;min-height:75px}.actions{display:flex;gap:10px;justify-content:flex-end;margin-top:17px}.actions button{border:0;border-radius:12px;padding:11px 16px;font:inherit}.cancel{background:#f1eee8;color:var(--ink)}.save{background:var(--sage);color:white}
+  </style>
+</head>
+<body>
+<header><div><h1>Jaslife</h1><div class="date" id="date"></div></div><div class="hello">慢慢来，也很好</div></header>
+<main>
+<section class="tab active" id="home">
+  <div class="hero"><small>今日待办</small><strong id="todoStat">0 / 0 已完成</strong><div class="progress"><i id="progress" style="width:0%"></i></div></div>
+  <div class="grid">
+    <div class="card"><div class="label">今日学习</div><b id="studyStat">0 分钟</b><span class="label">一点一点积累</span></div>
+    <div class="card"><div class="label">当前体重</div><b id="weightStat">— kg</b><span class="label">照顾好自己</span></div>
+    <div class="card"><div class="label">今日花销</div><b id="expenseStat">¥0.00</b><span class="label">温柔地记录</span></div>
+    <div class="card"><div class="label">今日运动</div><b id="exerciseStat">0 分钟</b><span class="label">为身体充电</span></div>
+    <div class="card note"><div class="label">随手记</div><p id="noteStat">今天也值得被认真记住。</p></div>
+  </div>
+  <h2 class="section-title">接下来要做</h2><div class="card" id="todayTodos"></div>
+</section>
+<section class="tab" id="todos"><h2 class="section-title">待办清单</h2><div class="card" id="todoList"></div></section>
+<section class="tab" id="study"><h2 class="section-title">学习记录</h2><div class="card" id="studyList"></div></section>
+<section class="tab" id="fitness"><h2 class="section-title">健身与体重</h2><div class="card" id="fitnessList"></div></section>
+<section class="tab" id="money"><h2 class="section-title">记账本</h2><div class="card" id="moneyList"></div></section>
+</main>
+<nav>
+<button class="nav-btn active" data-tab="home"><span>⌂</span>首页</button><button class="nav-btn" data-tab="todos"><span>✓</span>待办</button><button class="nav-btn" data-tab="study"><span>◌</span>学习</button><button class="add" id="openAdd" aria-label="新增">＋</button><button class="nav-btn" data-tab="fitness"><span>♥</span>健身</button><button class="nav-btn" data-tab="money"><span>¥</span>记账</button>
+</nav>
+<dialog id="dialog"><form method="dialog"><h2>记录一点生活</h2><div class="types" id="types"></div><label>内容<input id="entryText" placeholder="例如：完成英语阅读"></label><label id="valueLabel">数值（可选）<input id="entryValue" type="number" step="0.1" placeholder="例如：30"></label><div class="actions"><button class="cancel" value="cancel">取消</button><button class="save" id="saveEntry" value="default">保存</button></div></form></dialog>
+<script>
+const key='jaslife-data-v1',types=[['todo','待办','要做的事'],['study','学习','学习内容'],['exercise','运动','运动内容'],['weight','体重','当前体重'],['expense','支出','支出项目'],['income','收入','收入来源'],['note','备忘录','想记下的话']];
+let data=JSON.parse(localStorage.getItem(key)||'{"items":[]}'),chosen='todo';const $=s=>document.querySelector(s),day=new Date().toLocaleDateString('zh-CN',{month:'long',day:'numeric',weekday:'long'});$('#date').textContent=day;
+function save(){localStorage.setItem(key,JSON.stringify(data));render()} function today(x){return new Date(x.time).toDateString()===new Date().toDateString()} function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function list(items,el,kind){el.innerHTML=items.length?items.map(x=>'<div class="row">'+(kind==='todo'?'<input class="check" data-id="'+x.id+'" type="checkbox" '+(x.done?'checked':'')+'>':'<i class="dot"></i>')+'<div class="row-main">'+esc(x.text)+'<small>'+new Date(x.time).toLocaleDateString('zh-CN')+(x.value?' · '+x.value+(kind==='weight'?' kg':kind==='study'||kind==='exercise'?' 分钟':' 元'):'')+'</small></div>'+(kind==='expense'?'<span class="amount expense">−¥'+Number(x.value||0).toFixed(2)+'</span>':kind==='income'?'<span class="amount income">+¥'+Number(x.value||0).toFixed(2)+'</span>':'')+'</div>').join(''):'<div class="empty">还没有记录。点击下方 ＋，从一件小事开始吧。</div>'}
+function render(){const a=data.items,td=a.filter(x=>x.type==='todo'&&today(x)),done=td.filter(x=>x.done).length;$('#todoStat').textContent=done+' / '+td.length+' 已完成';$('#progress').style.width=(td.length?done/td.length*100:0)+'%';$('#studyStat').textContent=a.filter(x=>x.type==='study'&&today(x)).reduce((n,x)=>n+Number(x.value||0),0)+' 分钟';let w=a.filter(x=>x.type==='weight').at(-1);$('#weightStat').textContent=w?(w.value+' kg'):'— kg';$('#expenseStat').textContent='¥'+a.filter(x=>x.type==='expense'&&today(x)).reduce((n,x)=>n+Number(x.value||0),0).toFixed(2);$('#exerciseStat').textContent=a.filter(x=>x.type==='exercise'&&today(x)).reduce((n,x)=>n+Number(x.value||0),0)+' 分钟';let n=a.filter(x=>x.type==='note').at(-1);$('#noteStat').textContent=n?n.text:'今天也值得被认真记住。';list(td.filter(x=>!x.done),$('#todayTodos'),'todo');list(a.filter(x=>x.type==='todo'),$('#todoList'),'todo');list(a.filter(x=>x.type==='study'),$('#studyList'),'study');list(a.filter(x=>['exercise','weight'].includes(x.type)),$('#fitnessList'),'fitness');list(a.filter(x=>['expense','income'].includes(x.type)),$('#moneyList'),'money')}
+$('#types').innerHTML=types.map(t=>'<button class="type '+(t[0]===chosen?'selected':'')+'" type="button" data-type="'+t[0]+'">'+t[1]+'</button>').join('');
+$('#types').onclick=e=>{let b=e.target.closest('.type');if(!b)return;chosen=b.dataset.type;document.querySelectorAll('.type').forEach(x=>x.classList.toggle('selected',x===b));let t=types.find(x=>x[0]===chosen);$('#entryText').placeholder=t[2];$('#valueLabel').style.display=['study','exercise','weight','expense','income'].includes(chosen)?'block':'none'};
+$('#openAdd').onclick=()=>{$('#entryText').value='';$('#entryValue').value='';$('#dialog').showModal()};$('#saveEntry').onclick=e=>{let text=$('#entryText').value.trim(),v=$('#entryValue').value;if(!text&&chosen!=='weight'){e.preventDefault();$('#entryText').focus();return}data.items.push({id:Date.now(),type:chosen,text:text||(chosen==='weight'?'体重记录':''),value:v,time:Date.now(),done:false});save()};document.addEventListener('change',e=>{if(e.target.matches('.check')){let x=data.items.find(x=>x.id==e.target.dataset.id);x.done=e.target.checked;save()}});
+document.querySelectorAll('.nav-btn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nav-btn').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.id===b.dataset.tab))});if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js');render();
+</script></body></html>
